@@ -16,3 +16,6 @@ GNU GPL license
 - We do not use javascript or PHP!
 - Simple plain html is better than having a super modern site.
 - Users can use their own stylesheet if they wish to do so. 
+
+PLEASE CONTACT ME IF YOU WANT TO HELP 
+mrwils@protonmail.com
