@@ -1,0 +1,76 @@
+
+/* HTML elements */
+
+body {
+	max-width:   650px;
+    margin:      40px auto;
+    padding:     0 10px;
+	line-height: 1.6;
+	font-size:   18px;
+	color:       #444;
+}
+
+@media only screen and (max-width: 550px) {
+    body {
+        font-size:   15px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    body {
+        font-size:   12px;
+    }
+
+    input[type=text] {
+        width: 80px;
+    }
+}
+
+input[type=checkbox] {
+    width: 10px;
+}
+
+h1, h2, h3 {
+	line-height: 1.2;
+}
+
+table {
+    width:           100%;
+    border:          1px solid black;
+	border-collapse: collapse;
+}
+
+td, th {
+    padding: 5px;
+    border:  1px solid black;
+}
+
+/* Navigation and footer */
+
+nav, nav > ul, footer, footer > ul {
+    margin-right: auto;
+    margin-left:  auto;
+    max-width:    650px;
+}
+
+nav > ul > li, footer > ul > li {
+	display: initial;
+}
+
+nav > ul > li:not(:last-child)::after, footer > ul > li:not(:last-child)::after {
+	content: ' |';
+}
+
+footer {
+    position:      relative;
+    margin-bottom: 0px;
+    /* border-top: 1px solid #444; */
+}
+
+#sortOptionsTable {
+    font-size: 14px;
+}
+
+#sortOptionsTable td{
+    border: none;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Useful Wiki</title>
+    <meta name="description" content="Useful wiki, a wiki to find your wiki's">
+    <meta name="founder" content="Robin Wils" >
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/defaultStyle.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="../index.html">Home</a>
+            </li>
+            <li>
+                <a href="addWiki.html">Add a wiki</a>
+            </li>
+            <li>
+                <a href="about.html">About</a>
+            </li>
+            <li>
+                <a href="contact.html">Contact</a>
+            </li>
+            <li>
+                <a href="donate.html">Donate</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Request tag</h1>
+    <!-- This page will send me a email so that I can check of we need the tag. -->
+    <!-- The email will contain all the filled-in data and a link that I will be able to click on.
+         That link will insert a new tag in the database. (java back-end) -->
+
+    <form action="#">
+        <table id="wikiTable">
+            <tbody>
+                <tr>
+                    <!-- Required field -->
+                    <!-- This will have a maximum and minimum amount of chars -->
+                    <td>Name of the tag:</td>
+                    <td><input type="text" id="tag"></td>
+                </tr>
+                <tr>
+                    <!-- Required field -->
+                    <!-- This will have a maximum and minimum amount of chars -->
+                    <td>Description</td>
+                    <td><textarea id="tagDescription"></textarea></td>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Request wiki</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <footer>
+        <ul>
+            <li>
+                <a href="../index.html">Home</a>
+            </li>
+            <li>
+                <a href="addWiki.html">Add a wiki</a>
+            </li>
+            <li>
+                <a href="about.html">About</a>
+            </li>
+            <li>
+                <a href="contact.html">Contact</a>
+            </li>
+            <li>
+                <a href="donate.html">Donate</a>
+            </li>
+        </ul>
+    </footer>
+</body>
+</html>

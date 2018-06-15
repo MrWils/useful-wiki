@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Useful Wiki</title>
+	<meta name="description" content="Useful wiki, a wiki to find your wiki's">
+	<meta name="founder" content="Robin Wils" >
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../css/defaultStyle.css">
+</head>
+<body>
+	<nav>
+		<ul>
+			<li>
+				<a href="../index.html">Home</a>
+			</li>
+            <li>
+                <a href="addWiki.html">Add a wiki</a>
+            </li>
+			<li>
+				<a href="about.html">About</a>
+			</li>
+			<li>
+				<a href="contact.html">Contact</a>
+			</li>
+			<li>
+				<a href="donate.html">Donate</a>
+			</li>
+		</ul>
+	</nav>
+
+	<h1>Add a wiki</h1>
+	<!-- This page will send me a email so that I can check of it really is a useful_wiki. -->
+	<!-- The email will contain all the filled-in data and a link that I will be able to click on.
+		 That link will insert a new useful_wiki in the database. (java back-end) -->
+
+	<form action="#">
+		<table id="wikiTable">
+			<tbody>
+				<tr>
+					<!-- Required field -->
+					<!-- This will have a maximum and minimum amount of chars -->
+					<td>Name of the wiki:</td>
+					<td><input type="text" id="wikiName"></td>
+				</tr>
+				<tr>
+					<!-- Required field -->
+					<!-- This will have a maximum and minimum amount of chars -->
+					<td>Description</td>
+					<td>
+                        <textarea id="wikiDescription"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<!-- Required field -->
+					<!-- This will have a link validator -->
+					<td>Wiki URL</td>
+					<td><input type="text" id="wikiURL"></td>
+				</tr>
+				<tr>
+					<!-- Required field -->
+					<!-- This will have a maximum and minimum amount of tags -->
+					<td>Wiki tags</td>
+					<td><input type="text" id="wikiTags"></td>
+				</tr>
+				<tr>
+					<!-- This field is not required -->
+					<td>Wiki icon</td>
+					<td><input type="file"></td>
+				</tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Request wiki</button>
+                    </td>
+                </tr>
+                <!-- It would also be nice to add a field and a extra html page to edit useful_wiki's -->
+			</tbody>
+		</table>
+	</form>
+
+	<label>Do you think that we are missing a tag?</label>
+    <br> <!-- TODO: Replace the br element with CSS -->
+    <label>Request it</label>
+	<a href="requestTag.html">here</a>
+	<label>!</label>
+
+    <footer>
+        <ul>
+            <li>
+                <a href="../index.html">Home</a>
+            </li>
+            <li>
+                <a href="addWiki.html">Add a wiki</a>
+            </li>
+            <li>
+                <a href="about.html">About</a>
+            </li>
+            <li>
+                <a href="contact.html">Contact</a>
+            </li>
+            <li>
+                <a href="donate.html">Donate</a>
+            </li>
+        </ul>
+    </footer>
+</body>
+</html> 
