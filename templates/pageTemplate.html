@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <!--
 This website is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,6 +13,8 @@ You should have received a copy of the GNU General Public License
 along with this website.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Useful Wiki</title>
@@ -22,51 +22,47 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
     <meta name="founder" content="Robin Wils" >
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/defaultStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"
 </head>
-    <body>
+<body>
     <nav>
-        <ul>
+	<ul>
+	    <li>
+		<a href="/">Home</a>
+	    </li>
             <li>
-                <a href="../index.html">Home</a>
+                <a href="/addWiki/">Add a wiki</a>
             </li>
-            <li>
-                <a href="addWiki.html">Add a wiki</a>
-            </li>
-            <li>
-                <a href="about.html">About</a>
-            </li>
-            <li>
-                <a href="contact.html">Contact</a>
-            </li>
-            <li>
-                <a href="donate.html">Donate</a>
-            </li>
-        </ul>
+	    <li>
+	        <a href="/about/">About</a>
+	    </li>
+	    <li>
+	 	<a href="/contact/">Contact</a>
+	    </li>
+	    <li>
+		<a href="/donate/">Donate</a>
+	    </li>
+	</ul>
     </nav>
-
-    <h1>Donation page</h1>
-    <!-- This page will contain donation info. -->
-    <label>We currently do not have any donation info.</label>
-
+    {% block body %}{% endblock %}
     <footer>
         <ul>
             <li>
-                <a href="../index.html">Home</a>
+                <a href="/">Home</a>
             </li>
             <li>
-                <a href="addWiki.html">Add a wiki</a>
+                <a href="/addWiki/">Add a wiki</a>
             </li>
             <li>
-                <a href="about.html">About</a>
+                <a href="/about/">About</a>
             </li>
             <li>
-                <a href="contact.html">Contact</a>
+                <a href="/contact/">Contact</a>
             </li>
             <li>
-                <a href="donate.html">Donate</a>
+                <a href="/donate/">Donate</a>
             </li>
         </ul>
     </footer>
 </body>
-</html>
+</html> 

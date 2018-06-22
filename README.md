@@ -9,12 +9,12 @@ This project will use the GNU GPL license.
 CSS, HTML
 
 ### BACKEND
-Java
+Python
 
 ### LICENSE
 GNU GPL license  
   
-  
+- I am thinking of using mongodb but a simple txt file in JSON could also work.
 - We do not use javascript or PHP!
 - Simple plain html is better than having a super modern site.
 - Users can use their own stylesheet if they wish to do so. 

@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <!--
 This website is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,35 +13,9 @@ You should have received a copy of the GNU General Public License
 along with this website.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
-<html>
-<head>
-    <title>Useful Wiki</title>
-    <meta name="description" content="Useful wiki, a wiki to find your wiki's">
-    <meta name="founder" content="Robin Wils" >
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/defaultStyle.css">
-</head>
-<body>
-    <nav>
-        <ul>
-            <li>
-                <a href="../index.html">Home</a>
-            </li>
-            <li>
-                <a href="addWiki.html">Add a wiki</a>
-            </li>
-            <li>
-                <a href="about.html">About</a>
-            </li>
-            <li>
-                <a href="contact.html">Contact</a>
-            </li>
-            <li>
-                <a href="donate.html">Donate</a>
-            </li>
-        </ul>
-    </nav>
+
+{% extends "pageTemplate.html" %}
+{% block body %}
 
     <h1>Request tag</h1>
     <!-- This page will send me a email so that I can check of we need the tag. -->
@@ -66,31 +38,11 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
                     <td><textarea id="tagDescription"></textarea></td>
                 <tr>
                     <td colspan="2">
-                        <button type="submit">Request wiki</button>
+                        <button type="submit">Request tag</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </form>
 
-    <footer>
-        <ul>
-            <li>
-                <a href="../index.html">Home</a>
-            </li>
-            <li>
-                <a href="addWiki.html">Add a wiki</a>
-            </li>
-            <li>
-                <a href="about.html">About</a>
-            </li>
-            <li>
-                <a href="contact.html">Contact</a>
-            </li>
-            <li>
-                <a href="donate.html">Donate</a>
-            </li>
-        </ul>
-    </footer>
-</body>
-</html>
+{% endblock %}
