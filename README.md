@@ -11,14 +11,21 @@ CSS, HTML
 ### BACKEND
 Python
 
+### DATABASE
+MongoDb
+
 ### LICENSE
 GNU GPL license  
   
-- I am thinking of using mongodb but a simple txt file in JSON could also work.
 - We do not use javascript or PHP!
 - Simple plain html is better than having a super modern site.
 - Users can use their own stylesheet if they wish to do so. 
 
+### DEPENDENCIES
+- Python 3.7
+- Python3-flask
+- (pip) pymongo    (will be used for the database)
+- (pip) Flask-Mail (will be used to send mails)
 
 ### PLEASE CONTACT ME IF YOU WANT TO HELP 
 mrwils@protonmail.com  
