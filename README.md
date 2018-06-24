@@ -24,8 +24,9 @@ GNU GPL license
 ### DEPENDENCIES
 - Python 3.7
 - Python3-flask
-- (pip) pymongo    (will be used for the database)
-- (pip) Flask-Mail (will be used to send mails)
+- (pip) pymongo     (will be used for the database)
+- (pip) Flask-Mail  (will be used to send mails)
+- (pip) flask_table (will be used to sort the tables)
 
 ### PLEASE CONTACT ME IF YOU WANT TO HELP 
 mrwils@protonmail.com  

@@ -18,8 +18,8 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
 
 body {
 	max-width:   650px;
-    margin:      40px auto;
-    padding:     0 10px;
+        margin:      80px auto;
+        padding:     0 10px;
 	line-height: 1.6;
 	font-size:   18px;
 	color:       #444;
@@ -46,13 +46,13 @@ input[type=checkbox] {
 }
 
 h1, h2, h3 {
-	line-height: 1.2;
+    line-height: 1.2;
 }
 
 table {
     width:           100%;
     border:          1px solid black;
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 
 td, th {
@@ -69,17 +69,27 @@ nav, nav > ul, footer, footer > ul {
 }
 
 nav > ul > li, footer > ul > li {
-	display: initial;
+    display: initial;
 }
 
 nav > ul > li:not(:last-child)::after, footer > ul > li:not(:last-child)::after {
-	content: ' |';
+    content: ' |';
+}
+
+nav, footer {
+    width:      100%;
+    position:   absolute;
+    text-align: center;
 }
 
 footer {
-    position:      relative;
-    margin-bottom: 0px;
-    /* border-top: 1px solid #444; */
+    bottom:     0;
+    border-top: 1px solid #444;
+}
+
+nav {
+    top:           0;
+    border-bottom: 1px solid #444;
 }
 
 #sortOptionsTable {
