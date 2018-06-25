@@ -1,3 +1,5 @@
+
+
 # This website is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -11,14 +13,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this website.  If not, see <https://www.gnu.org/licenses/>.
 
+
 # IMPORTS
 from flask_table import Table, Col
 from flask import Flask, request, url_for, render_template
-# from pymongo import MongoClient
-# flash redirect request session abort
+from pymongo import MongoClient
+from constant import Constant
+from pprint import pprint
 
 # RUN-SETTINGS
 app = Flask(__name__)
+
+# DATABASE
+# Connect with MongoLocalServer
+client = MongoClient(Constant.MONGODB_HOST_LOCATION, Constant.MONGODB_PORT)
+
+# Make database useful-wiki if not exists
+db = client.useful_wiki
+
+# Make our collections if not exists
+wiki_collection = db['wiki_collection']
 
 # ROUTES
 @app.route('/')
@@ -94,10 +108,9 @@ class SortableTable(Table):
             tags      = tags
         )
 
-# DEMO DATABASE
-# TODO: Replace demo database with real mongodb database
+# DATABASE ITEMS
 class Item(object):
-    def __init__(self, icon, name, description, link, tags):
+    def __init__(self, icon, name, description, link, tags=[]):
         self.icon        = icon
         self.name        = name
         self.description = description
@@ -105,17 +118,9 @@ class Item(object):
         self.tags        = tags
 
     @classmethod
-    def get_elements(cls):
-        return [
-            Item('none', 'Wikipedia', '/', 'www.wikipedia.com', ['general']),
-            Item('none', 'Encyclopedia dramatica', '/', 'www.encyclopediadramatica.rs', ['NSFW']),
-            Item('none', 'PRISM-break', '/', 'www.prism-break.org', ['privacy'])
-        ]
-
-    @classmethod
-    def get_sorted_by(cls, sort, reverse=False):
+    def get_sorted_by(cli, sort, reverse=False):
         tags = request.args.getlist('tags')
-        data = cls.get_elements()
+        data = Item.get_elements()
 
         for item in data:
             if 'NSFW' in item.tags and 'NSFW' not in tags:
@@ -127,55 +132,20 @@ class Item(object):
            reverse = reverse
         )
 
-# DATABASE
-# from pymongo import MongoClient
+    @classmethod
+    def get_elements(cli):
+        try:
+            wikis = []
+            wiki_documents = wiki_collection.find({})
 
-# Connect with MongoLocalServer
-# client = MongoClient('localhost', 27017)
+            for wiki in wiki_documents:
+                wikis.append(Item(wiki['icon'], wiki['name'], wiki['description'], wiki['link'], wiki['tags']))
 
-# Make database useful-wiki if not exists
-# db = client.useful_wiki
+            return wikis
 
-# Make our collections
-# wiki_collection = db.pymongo_wikis
-
-# Function to insert new wiki
-#def insertNewWiki(icon, name, description, link, tags):
-#    try:
-#    wiki_collection.insert_one(
-#        {"icon": icon,
-#         "name": name,
-#         "description": description,
-#         "link": link,
-#         "tags": tags,
-#         })
-
-# Function to update wiki
-#def updateWiki(icon, name, description, link, tags):
-#    try:
-#    wiki_collection.update_one(
-#        {"icon": icon,
-#         "name": name,
-#         "description": description,
-#         "link": link,
-#         "tags": tags,
-#         })
-
-# Function to get all wikis
-#def getWikis():
-#    try:
-#    wikis=[]
-#    wikiColumn = wiki_collection.find()
-
-#    for wiki in wikiColumn:
-#        wikis = wikis + wiki
-
-#    return wikis
-
-#    except Exception:
-#        return ["error while reading wiki"]
-
+        except Exception:
+            return ['none', 'Error', 'Error, while reading the database', 'www.useful-wiki.com', ['Error']]
 
 # RUN THE APP
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host=Constant.WEBHOST_LOCATION, port=Constant.WEBHOST_PORT)
