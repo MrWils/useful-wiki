@@ -14,30 +14,31 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 
-{% extends "pageTemplate.html" %}
-{% block body %}
+{% extends "pageTemplate.html" %} {% block body %}
 
-	<h1>Useful Wiki</h1>
-	<p>Useful wiki, a wiki to find your wiki's</p>
-	<!-- This page contains the useful_wiki's. -->
+<h1>Useful Wiki</h1>
+<p>Useful wiki, a wiki to find your wiki's</p>
+<!-- This page contains the useful_wiki's. -->
 
-	<!-- People will have to be able to sort the useful_wiki table based on tags -->
-	<form action="POST">
-        <table id="sortOptionsTable">
-            <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox" name="allowNSFW" value="NSFW">
-                        <label>allow NSFW</label>
-                    </td>
-                    <td>
-                        <input type="text" id="txtSearch">
-                        <button>search</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<!-- People will have to be able to sort the useful_wiki table based on tags -->
+<form method='GET'>
+	<table id="sortOptionsTable">
+		<tbody>
+			<tr>
+				<td>
+					{% if 'NSFW' in tags %}
+					<input type='checkbox' onclick='window.location.assign("/?tags=")' checked> {% else %}
+					<input type='checkbox' onclick='window.location.assign("/?tags=NSFW")'> {% endif %}
+					<label>allow NSFW</label>
+				</td>
+				<td>
+					<input type="text" name="txtSearch">
+					<button>search</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	{{ wikiTable }}
-	</form>
+</form>
 
 {% endblock %}

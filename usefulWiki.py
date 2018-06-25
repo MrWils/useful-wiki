@@ -23,85 +23,109 @@ app = Flask(__name__)
 # ROUTES
 @app.route('/')
 def home():
-    sort      = request.args.get('sort', 'name')
-    reverse   = (request.args.get('direction', 'asc') == 'desc')
+    sort     = request.args.get('sort', 'name')
+    reverse  = (request.args.get('direction', 'asc') == 'desc')
+    tags     = request.args.getlist('tags')
 
-    wikiTable = SortableTable(Item.get_sorted_by(sort, reverse),
-        sort_by=sort,
-        sort_reverse=reverse)
+    wikiTable = SortableTable(
+        Item.get_sorted_by(sort, reverse),
+            sort_by      = sort,
+            sort_reverse = reverse
+    )
 
     return render_template(
-        'index.html', wikiTable=wikiTable)
-
-# @app.route('/<string:tags>/')
-# def wikiSearch(tags):
-#     return tags
+        'index.html',
+        wikiTable = wikiTable,
+        tags      = tags
+    )
 
 @app.route('/about/')
 def about():
     return render_template(
-        'html/about.html')
+        'html/about.html'
+    )
 
 @app.route('/addWiki/')
 def addWiki():
     return render_template(
-        'html/addWiki.html')
+        'html/addWiki.html'
+    )
 
 @app.route('/requestTag/')
 def requestTag():
     return render_template(
-        'html/requestTag.html')
+        'html/requestTag.html'
+    )
 
 @app.route('/contact/')
 def contact():
     return render_template(
-        'html/contact.html')
+        'html/contact.html'
+    )
 
 @app.route('/donate/')
 def donate():
     return render_template(
-        'html/donate.html')
+        'html/donate.html'
+    )
 
 # WIKI-TABLE
 # TODO: Add icon support
-# TODO: Make the wiki-link clickable
+# TODO: Make the wiki-links clickable
+# TODO: Make a working searchbox
 class SortableTable(Table):
-    icon = Col('Icon', allow_sort=False)
-    name = Col('Name')
+    icon        = Col('Icon', allow_sort = False)
+    name        = Col('Name')
     description = Col('Description')
-    link = Col('Link', allow_sort=False)
-    allow_sort = True
+    link        = Col('Link', allow_sort = False)
+    allow_sort  = True
 
-    def sort_url(self, col_key, reverse=False):
+    def sort_url(self, col_key, reverse = False):
+        tags = request.args.getlist('tags')
+
         if reverse:
             direction = 'desc'
         else:
             direction = 'asc'
 
-        return url_for('home', sort=col_key, direction=direction)
+        return url_for('home',
+            sort      = col_key,
+            direction = direction,
+            tags      = tags
+        )
 
 # DEMO DATABASE
 # TODO: Replace demo database with real mongodb database
 class Item(object):
-    def __init__(self, icon, name, description, link):
-        self.icon = icon
-        self.name = name
+    def __init__(self, icon, name, description, link, tags):
+        self.icon        = icon
+        self.name        = name
         self.description = description
-        self.link = link
+        self.link        = link
+        self.tags        = tags
 
     @classmethod
     def get_elements(cls):
         return [
-            Item('none', 'wikipedia', '/', 'www.wikipedia.com'),
-            Item('none', 'encyclopedia dramatica', '/ {has NSFW tag}', 'www.encyclopediadramatica.rs'),
-            Item('none', 'PRISM-break', '/', 'prism-break.org')]
+            Item('none', 'Wikipedia', '/', 'www.wikipedia.com', ['general']),
+            Item('none', 'Encyclopedia dramatica', '/', 'www.encyclopediadramatica.rs', ['NSFW']),
+            Item('none', 'PRISM-break', '/', 'www.prism-break.org', ['privacy'])
+        ]
 
     @classmethod
     def get_sorted_by(cls, sort, reverse=False):
+        tags = request.args.getlist('tags')
+        data = cls.get_elements()
+
+        for item in data:
+            if 'NSFW' in item.tags and 'NSFW' not in tags:
+                data.remove(item)
+
         return sorted(
-            cls.get_elements(),
-            key=lambda x: getattr(x, sort),
-            reverse=reverse)
+           data,
+           key     = lambda x: getattr(x, sort),
+           reverse = reverse
+        )
 
 # DATABASE
 # from pymongo import MongoClient
@@ -155,5 +179,3 @@ class Item(object):
 # RUN THE APP
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
-
-
