@@ -46,11 +46,11 @@ def InsertNewWiki(icon, name, description, link, tags):
             tagIds.append(tagId)
 
         wiki_collection.insert_one({
-            "icon": icon,
-            "name": name,
+            "icon":        icon,
+            "name":        name,
             "description": description,
-            "link": link,
-            "tagIds": tagIds
+            "link":        link,
+            "tagIds":      tagIds
         })
 
     except Exception:

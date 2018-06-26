@@ -15,13 +15,134 @@
 
 
 # IMPORTS
-from flask_table import Table, Col
 from flask import Flask, request, url_for, render_template
+
+from flask_table import Table, Col
+from flask_mail import Mail, Message
+
 from pymongo import MongoClient
 from constant import Constant
 
 # RUN-SETTINGS
 app = Flask(__name__)
+
+# IMPORT MAIL SETTINGS
+app.config['MAIL_SERVER']   = Constant.MAIL_SERVER
+app.config['MAIL_PORT']     = Constant.MAIL_PORT
+app.config['MAIL_USERNAME'] = Constant.MAIL_USERNAME
+app.config['MAIL_PASSWORD'] = Constant.MAIL_PASSWORD
+app.config['MAIL_USE_TLS']  = Constant.MAIL_USE_TLS
+app.config['MAIL_USE_SSL']  = Constant.MAIL_USE_SSL
+
+mail = Mail(app)
+
+# golbal validators
+wiki_validator = {
+    "wikiNameValidator":        "valid",
+    "wikiDescriptionValidator": "valid",
+    "wikiURLValidator":         "valid",
+    "wikiTagsValidator":        "valid"
+}
+tag_validator = {
+    "tagNameLengthValidator":  "valid",
+    "tagNameSpacesValidator":  "valid",
+    "tagDescriptionValidator": "valid"
+}
+
+@app.route('/requestWiki/sendMail/')
+def sendWikiMail():
+    validator = wiki_validator
+
+    # Get values
+    wikiName        = request.args.get('wikiName')
+    wikiDescription = request.args.get('wikiDescription')
+    wikiURL         = request.args.get('wikiURL')
+    wikiTags        = request.args.get('wikiTags').strip().split(',')
+
+    # Validate
+    # TODO: Fix validator problems
+    # TODO: Add wikiName has to be unique validation
+    if len(wikiName) < Constant.MIN_WIKI_NAME_LENGTH:
+        validator["wikiNameValidator"] = "The minimum name length is " + str(Constant.MIN_WIKI_NAME_LENGTH)
+    elif len(wikiName) > Constant.MAX_WIKI_NAME_LENGTH:
+        validator["wikiNameValidator"] = "The maximum name length is " + str(Constant.MAX_WIKI_NAME_LENGTH)
+
+    if len(wikiDescription) < Constant.MIN_WIKI_DESCRIPTION_LENGTH:
+        validator["wikiDescriptionValidator"] = "The minimum description length is " + str(Constant.MIN_WIKI_DESCRIPTION_LENGTH)
+    elif len(wikiDescription) > Constant.MAX_WIKI_DESCRIPTION_LENGTH:
+        validator["wikiDescriptionValidator"] = "The maximum description length is " + str(Constant.MAX_WIKI_DESCRIPTION_LENGTH)
+
+    if 'www.' not in wikiURL or wikiURL.count(".") < 2:
+        validator["wikiURLValidator"] = "Please use a valid URL like 'www.my-useful-wiki.com'"
+
+    valid_tags = True
+    invalid_tags = ""
+    for tag in wikiTags:
+        if tag not in tag_collection.find({}):
+            valid_tags = False
+            invalid_tags += tag + ' '
+
+    if valid_tags == False:
+        validator["wikiTagsValidator"] = "Some of your tags are invalid: " + invalid_tags
+
+    isEverythingValid = True
+    for validation in validator:
+        if validation != 'valid':
+            isEverythingValid=False
+
+    if isEverythingValid:
+        print("mail sent")
+        msg = Message('Wiki_Request', sender = 'useful-wiki',
+            recipients = [MAIL_USERNAME])
+
+        msg.body = mailBody
+        mail.send(msg)
+
+    return render_template(
+        'html/requestWiki.html',
+        MailIsSent = isEverythingValid,
+        validator  = validator
+    )
+
+@app.route('/requestTag/sendMail/')
+def sendTagMail():
+        validator = tag_validator
+
+        # Get values
+        tagName  = request.args.get('tagName')
+        tagDescription = request.args.get('tagDescription')
+
+        # Validate
+        # TODO: Add tagName has to be unique validation
+        if " " in tagName:
+            validator["tagNameSpacesValidator"] = "A tag can't contain spaces"
+        if len(tagName) < Constant.MIN_TAG_NAME_LENGTH:
+            validator["tagNameLengthValidator"] = "The minimum tag length is " + str(Constant.MIN_TAG_NAME_LENGTH)
+        elif len(tagName) > Constant.MAX_TAG_NAME_LENGTH:
+            validator["tagNameLengthValidator"] = "The maximum tag length is " + str(Constant.MAX_TAG_NAME_LENGTH)
+
+        if len(tagDescription) < Constant.MIN_TAG_DESCRIPTION_LENGTH:
+            validator["tagDescriptionValidator"] = "The minimum description length is " + str(Constant.MIN_TAG_DESCRIPTION_LENGTH)
+        elif len(tagDescription) > Constant.MAX_TAG_DESCRIPTION_LENGTH:
+            validator["tagDescriptionValidator"] = "The maximum description length is " + str(Constant.MAX_TAG_DESCRIPTION_LENGTH)
+
+        isEverythingValid = True
+        for validation in validator:
+            if validation != 'valid':
+                isEverythingValid = False
+
+        if isEverythingValid:
+            msg = Message('Tag_Request', sender = 'useful-wiki',
+                recipients = [MAIL_USERNAME])
+
+            msg.body = '<h1>' + tagName + '</h1><p>' + tagDescription + '</p>'
+            mail.send(msg)
+
+        return render_template(
+            'html/requestTag.html',
+            MailIsSent = isEverythingValid,
+            validator  = validator
+        )
 
 # DATABASE
 # Connect with MongoLocalServer
@@ -60,15 +181,17 @@ def about():
     )
 
 @app.route('/requestWiki/')
-def addWiki():
+def requestWiki():
     return render_template(
-        'html/addWiki.html'
+        'html/requestWiki.html',
+        validator = wiki_validator
     )
 
 @app.route('/requestTag/')
 def requestTag():
     return render_template(
-        'html/requestTag.html'
+        'html/requestTag.html',
+        validator = tag_validator
     )
 
 @app.route('/contact/')

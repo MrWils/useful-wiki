@@ -97,3 +97,7 @@ nav {
 #sortOptionsTable td {
   border: none;
 }
+
+#errorList {
+  color: #ff0033;
+}

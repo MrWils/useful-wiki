@@ -31,3 +31,27 @@ class Constant():
     WEBHOST_LOCATION = '0.0.0.0'
     # PORT
     WEBHOST_PORT = '80'
+
+    # MAIL SETTINGS
+    MAIL_SERVER   = 'smtp.gmail.com'
+    MAIL_PORT     = 465
+    MAIL_USERNAME = 'me@gmail.com'
+    MAIL_PASSWORD = '''******'''
+    MAIL_USE_TLS  = False
+    MAIL_USE_SSL  = True
+    # You may have to decrease the security level.
+    # Please log in to your Gmail account and visit this link to decrease the security.
+    # https://myaccount.google.com/intro/security
+
+    # VALIDATOR SETTINGS
+    MIN_WIKI_NAME_LENGTH = 10
+    MAX_WIKI_NAME_LENGTH = 25
+
+    MIN_WIKI_DESCRIPTION_LENGTH = 100
+    MAX_WIKI_DESCRIPTION_LENGTH = 250
+
+    MIN_TAG_NAME_LENGTH = 4
+    MAX_TAG_NAME_LENGTH = 25
+
+    MIN_TAG_DESCRIPTION_LENGTH = 35
+    MAX_TAG_DESCRIPTION_LENGTH = 250

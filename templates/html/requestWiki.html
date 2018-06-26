@@ -21,50 +21,55 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
 <!-- The email will contain all the filled-in data and a link that I will be able to click on.
 		 That link will insert a new useful_wiki in the database. (java back-end) -->
 
-<form action="#">
-	<table id="wikiTable">
+<form action="/requestWiki/sendMail/" method="get">
+	<table>
 		<tbody>
 			<tr>
 				<!-- Required field -->
 				<!-- This will have a maximum and minimum amount of chars -->
 				<td>Name of the wiki:</td>
-				<td><input type="text" id="wikiName"></td>
+				<td><input type="text" name="wikiName"></td>
 			</tr>
 			<tr>
 				<!-- Required field -->
 				<!-- This will have a maximum and minimum amount of chars -->
 				<td>Description</td>
 				<td>
-					<textarea id="wikiDescription"></textarea>
+					<textarea name="wikiDescription"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<!-- Required field -->
 				<!-- This will have a link validator -->
 				<td>Wiki URL</td>
-				<td><input type="text" id="wikiURL"></td>
+				<td><input type="text" name="wikiURL"></td>
 			</tr>
 			<tr>
 				<!-- Required field -->
 				<!-- This will have a maximum and minimum amount of tags -->
 				<td>Wiki tags</td>
-				<td><input type="text" id="wikiTags"></td>
+				<td><input type='text' name="wikiTags"></td>
 			</tr>
 			<tr>
 				<!-- This field is not required -->
 				<td>Wiki icon</td>
-				<td><input type="file"></td>
+				<td><input type='file' name="wikiIcon"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<button type="submit">Request wiki</button>
+					<button type='submit'>Request wiki</button>
 				</td>
 			</tr>
-			<!-- It would also be nice to add a field and a extra html page to edit useful_wiki's -->
 		</tbody>
 	</table>
 </form>
-
+<ul id="errorList">
+	{% if validator["wikiNameValidator"] != 'valid' %}
+	<li>{{ validator["wikiNameValidator"] }}</li>{% endif %} {% if validator["wikiDescriptionValidator"] != 'valid' %}
+	<li>{{ validator["wikiDescriptionValidator"] }}</li>{% endif %} {% if validator["wikiURLValidator"] != 'valid' %}
+	<li>{{ validator["wikiURLValidator"] }}</li>{% endif %} {% if validator["wikiTagsValidator"] != 'valid' %}
+	<li>{{ validator["wikiTagsValidator"] }}</li>{% endif %}
+</ul>
 <label>Do you think that we are missing a tag?</label>
 <br>
 

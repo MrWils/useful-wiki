@@ -21,20 +21,20 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
 <!-- The email will contain all the filled-in data and a link that I will be able to click on.
          That link will insert a new tag in the database. (java back-end) -->
 
-<form action="#">
-  <table id="wikiTable">
+<form action="/requestTag/sendMail/" method="get">
+  <table>
     <tbody>
       <tr>
         <!-- Required field -->
         <!-- This will have a maximum and minimum amount of chars -->
         <td>Name of the tag:</td>
-        <td><input type="text" id="tag"></td>
+        <td><input type="text" name="tagName"></td>
       </tr>
       <tr>
         <!-- Required field -->
         <!-- This will have a maximum and minimum amount of chars -->
         <td>Description</td>
-        <td><textarea id="tagDescription"></textarea></td>
+        <td><textarea name="tagDescription"></textarea></td>
         <tr>
           <td colspan="2">
             <button type="submit">Request tag</button>
@@ -43,5 +43,11 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
     </tbody>
   </table>
 </form>
+<ul id="errorList">
+	{% if validator["tagNameSpacesValidator"] != 'valid' %}
+	<li>{{ validator["tagNameSpacesValidator"] }}</li>{% endif %} {% if validator["tagNameLengthValidator"] != 'valid' %}
+	<li>{{ validator["tagNameLengthValidator"] }}</li>{% endif %} {% if validator["tagDescriptionValidator"] != 'valid' %}
+	<li>{{ validator["tagDescriptionValidator"] }}</li>{% endif %}
+</ul>
 
 {% endblock %}

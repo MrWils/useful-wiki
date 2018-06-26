@@ -21,14 +21,14 @@ along with this website.  If not, see <https://www.gnu.org/licenses/>.
 <!-- This page contains the useful_wiki's. -->
 
 <!-- People will have to be able to sort the useful_wiki table based on tags -->
-<form method='GET'>
+<form method="GET">
 	<table id="sortOptionsTable">
 		<tbody>
 			<tr>
 				<td>
 					{% if 'NSFW' in tags %}
-					<input type='checkbox' onclick='window.location.assign("/?tags=")' checked> {% else %}
-					<input type='checkbox' onclick='window.location.assign("/?tags=NSFW")'> {% endif %}
+					<input type="checkbox" onclick="window.location.assign("/?tags=")" checked> {% else %}
+					<input type="checkbox" onclick="window.location.assign("/?tags=NSFW")"> {% endif %}
 					<label>allow NSFW</label>
 				</td>
 				<td>
