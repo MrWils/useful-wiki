@@ -19,7 +19,6 @@ from flask_table import Table, Col
 from flask import Flask, request, url_for, render_template
 from pymongo import MongoClient
 from constant import Constant
-from pprint import pprint
 
 # RUN-SETTINGS
 app = Flask(__name__)
@@ -33,6 +32,7 @@ db = client.useful_wiki
 
 # Make our collections if not exists
 wiki_collection = db['wiki_collection']
+tag_collection  = db['tag_collection']
 
 # ROUTES
 @app.route('/')
@@ -59,7 +59,7 @@ def about():
         'html/about.html'
     )
 
-@app.route('/addWiki/')
+@app.route('/requestWiki/')
 def addWiki():
     return render_template(
         'html/addWiki.html'
@@ -110,7 +110,7 @@ class SortableTable(Table):
 
 # DATABASE ITEMS
 class Item(object):
-    def __init__(self, icon, name, description, link, tags=[]):
+    def __init__(self, icon, name, description, link, tags = []):
         self.icon        = icon
         self.name        = name
         self.description = description
@@ -134,18 +134,46 @@ class Item(object):
 
     @classmethod
     def get_elements(cli):
+        wikis = []
+
         try:
-            wikis = []
             wiki_documents = wiki_collection.find({})
 
             for wiki in wiki_documents:
-                wikis.append(Item(wiki['icon'], wiki['name'], wiki['description'], wiki['link'], wiki['tags']))
+                wikiTags = []
+
+                for tagId in wiki['tagIds']:
+                    tagName = tag_collection.find_one(
+                        {"_id": tagId}
+                    ).get('name')
+                    print(tagName)
+
+                    if tagName is not None:
+                        wikiTags.append(tagName)
+                    else:
+                        return [Item(
+                            'none', 'Error', 'Error, invalid tag in tags',
+                            'www.useful-wiki.com', ['Error'])]
+
+                wikis.append(
+                    Item(
+                        wiki['icon'], wiki['name'],
+                        wiki['description'], wiki['link'], wikiTags
+                    )
+                )
+
+            if wikis is None or len(wikis) == 0:
+                return [Item(
+                    'none', 'Error', 'Error, couldn\'t find any wikis',
+                    'www.useful-wiki.com', ['Error'])]
 
             return wikis
 
         except Exception:
-            return ['none', 'Error', 'Error, while reading the database', 'www.useful-wiki.com', ['Error']]
+            return [Item(
+                'none', 'Error', 'Unknown error, while reading the database',
+                'www.useful-wiki.com', ['Error'])]
 
 # RUN THE APP
 if __name__ == '__main__':
-    app.run(host=Constant.WEBHOST_LOCATION, port=Constant.WEBHOST_PORT)
+    app.run(host = Constant.WEBHOST_LOCATION, port = Constant.WEBHOST_PORT)
