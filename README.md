@@ -17,7 +17,7 @@ People will be able to add wiki's, they will also have to add some tags so that 
 
 # Status
 The project is on hold.  
-I check me email often and extra contributors are welcome.
+I check my email often and extra contributors are welcome.
 
 ### Frontend
 CSS, HTML
